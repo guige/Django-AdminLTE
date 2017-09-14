@@ -1,0 +1,1010 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a Vega OS Cloud Api Reference.\n* Content-Type is application/json\n* All timestamps are returned in ISO 8601 format: \n* All key/value are optional unless noted otherwise.\n",
+        "version": "1.0.1",
+        "title": "Vega OS Cloud API",
+        "termsOfService": "http://www.utstarcom.com/terms/",
+        "contact": {
+            "name": "song.chen@utstar.com"
+        }
+    },
+    "host": "m.vegcloud.xyz",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "securityDefinitions": {
+        "basicAuth": {
+            "type": "basic",
+            "description": "HTTP Basic Authentication. Works over `HTTP` and `HTTPS`"
+        }
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/UTCloudApi/V1": {
+            "get": {
+                "tags": [
+                    "common"
+                ],
+                "summary": "Ping the API server",
+                "description": "Ping the API server",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                }
+            }
+        },
+        "/UTCloudApi/apps/V1": {
+            "get": {
+                "tags": [
+                    "apps"
+                ],
+                "summary": "Get all application configuration and status",
+                "description": "Get all application configuration and status",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/app_info"
+                            }
+                        },
+                        "examples": {
+                            "ippbx": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "1.2",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "openvpn": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "1.3",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "email": {
+                                "subscription": true,
+                                "status": true,
+                                "version": "v1.9",
+                                "vendor": "",
+                                "expiration": "2017-05-15T00:00:00.000Z"
+                            },
+                            "firewall": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "webproxy": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "storage": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "",
+                                "vendor": "",
+                                "expiration": ""
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/apps/V1/{app_name}": {
+            "get": {
+                "tags": [
+                    "apps"
+                ],
+                "summary": "Get application configuration and status",
+                "description": "Get application configuration and status",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/app_name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/app_info"
+                        },
+                        "examples": {
+                            "subscription": false,
+                            "status": false,
+                            "version": "1.2",
+                            "vendor": "",
+                            "expiration": ""
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "apps"
+                ],
+                "summary": "Modify application configurations",
+                "description": "Modify application configurations",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/app_name"
+                    },
+                    {
+                        "in": "body",
+                        "name": "app_conf",
+                        "schema": {
+                            "$ref": "#/definitions/app_info"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/hostname": {
+            "get": {
+                "tags": [
+                    "hostname"
+                ],
+                "summary": "Return hostname information",
+                "description": "Return hostname information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "hostname"
+                ],
+                "summary": "Modify hostname information",
+                "description": "Modify hostname information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "hostname",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/system": {
+            "get": {
+                "tags": [
+                    "system"
+                ],
+                "summary": "Return system information",
+                "description": "Return system information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/system_config"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/system/stats/memory": {
+            "get": {
+                "tags": [
+                    "system memory stats"
+                ],
+                "summary": "Return system memory information",
+                "description": "Return system memory information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/system_memory_config"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/monitor": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return All Monitor Info",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Modify Monitor Configurations",
+                "description": "patch Monitor config",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "patch_monitor_config",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "type": "boolean",
+                                    "description": "enable or disable monitor",
+                                    "example": true
+                                },
+                                "pushaddr": {
+                                    "type": "string",
+                                    "description": "modify monitor push stream address",
+                                    "example": "rtmp://172.21.148.249:1935/live4/room1"
+                                },
+                                "pulladdr": {
+                                    "type": "string",
+                                    "description": "modify monitor pull stream address",
+                                    "example": "rtmp://172.21.148.249:1935/live4/room1"
+                                },
+                                "camera": {
+                                    "$ref": "#/definitions/CameraMap"
+                                },
+                                "pushinfo": {
+                                    "$ref": "#/definitions/PushInfoMap"
+                                },
+                                "ptzcontrol": {
+                                    "$ref": "#/definitions/PtzCtlMap"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/monitor/cameras": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return Camera Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/monitor/pushinfo": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return Current  Monitor  Push Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/monitor/ptzctl": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return Camera ExtCommand Control Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/monitor/videos": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return the info of All/Single Recoreded  Video-Files",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "find video by date e.g:'20170216','20170216-20170221'",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/interface/Wireless": {
+            "get": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Return configurations for wireless",
+                "description": "Return configurations for wireless",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "enable": true,
+                            "egress_limit": 0,
+                            "ingress_limit": 0,
+                            "speed": "auto",
+                            "mtu": 1500,
+                            "vlan_mode": "access",
+                            "vlan_id": 1,
+                            "tunnel": 0,
+                            "trunks": [],
+                            "qinq": [],
+                            "WiFi": {
+                                "enable": true,
+                                "ieee802.11": {
+                                    "ssid": "VBGwifi",
+                                    "operation": {
+                                        "channel": 6
+                                    }
+                                },
+                                "wpa": {
+                                    "passphrase": "vbg12345"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Modify configurations for wireless",
+                "description": "Modify configurations for wireless",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "wifi_config",
+                        "description": "Wifi config",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wifi_config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/interface/Wireless/connected": {
+            "get": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Return connected wireless devices",
+                "description": "Return the connected wireless devices",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "examples": {
+                            "devices": [
+                                "00:01:02:03:04:05",
+                                "00:02:01:02:01:01"
+                            ]
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "parameters": {
+        "app_name": {
+            "name": "app_name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "enum": [
+                "ippbx",
+                "openvpn",
+                "firewall",
+                "email",
+                "webproxy",
+                "storage"
+            ]
+        }
+    },
+    "definitions": {
+        "app_info": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "description": "Application enable or not",
+                    "example": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Application name",
+                    "example": "email"
+                },
+                "preinstall": {
+                    "type": "boolean",
+                    "description": "Application preinstall or not",
+                    "example": true
+                },
+                "status": {
+                    "type": "boolean",
+                    "description": "Application status",
+                    "example": true
+                },
+                "subscription": {
+                    "type": "boolean",
+                    "description": "Application subscriped or not",
+                    "example": true
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Application version",
+                    "example": "v1.0"
+                },
+                "vendor": {
+                    "type": "string",
+                    "description": "Application vendor",
+                    "example": "UTstarcom"
+                },
+                "expiration": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Application expiration date",
+                    "example": "2017-05-15T00:00:00.000Z"
+                }
+            }
+        },
+        "system_config": {
+            "type": "object",
+            "properties": {
+                "serial_number": {
+                    "description": "serial_number",
+                    "type": "string",
+                    "example": "SN1536012178"
+                },
+                "sku_number": {
+                    "description": "sku_number",
+                    "type": "string",
+                    "example": "QXX1895906"
+                },
+                "software_version": {
+                    "description": "software_version",
+                    "type": "string",
+                    "example": "2.1.2"
+                },
+                "hardware_version": {
+                    "description": "hardware_version",
+                    "type": "string",
+                    "example": "A1"
+                },
+                "family": {
+                    "description": "family",
+                    "type": "string",
+                    "example": "VBG"
+                },
+                "manufacturer": {
+                    "description": "manufacturer",
+                    "type": "string",
+                    "example": "VGL"
+                },
+                "product": {
+                    "description": "product",
+                    "type": "string",
+                    "example": "M8105"
+                },
+                "mac": {
+                    "description": "mac",
+                    "type": "string",
+                    "example": "00:07:ba:30:a7:40"
+                }
+            }
+        },
+        "system_memory_config": {
+            "type": "object",
+            "properties": {
+                "MemTotal": {
+                    "description": "System total memory, unit is 'M'.",
+                    "type": "integer",
+                    "example": "16327976"
+                },
+                "MemFree": {
+                    "description": "System free memory",
+                    "type": "integer",
+                    "example": "13818004"
+                },
+                "MemAvailable": {
+                    "description": "System available memory",
+                    "type": "integer",
+                    "example": "15653796"
+                }
+            }
+        },
+        "Camera": {
+            "description": "Camera object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Camera Id",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Camera Name",
+                    "example": "camera1"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ]
+        },
+        "PushInfo": {
+            "description": "PushInfo object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Camera Id",
+                    "example": "1"
+                },
+                "hisvideofile": {
+                    "type": "string",
+                    "description": "history video filename, keep \"\" when pushing live camera",
+                    "example": "Cam001_20170214_1031"
+                },
+                "hisstarttime": {
+                    "type": "string",
+                    "description": "starttime of history video when pushing, keep \"\" when pushing live camera",
+                    "example": "00:02:50"
+                },
+                "resolution": {
+                    "type": "string",
+                    "description": "Resolution config when pushing",
+                    "example": "1280*720"
+                },
+                "enable": {
+                    "type": "boolean",
+                    "description": "enable/disable pushing  live/history video",
+                    "example": true
+                }
+            },
+            "required": [
+                "id",
+                "resolution",
+                "enable"
+            ]
+        },
+        "PtzCtl": {
+            "description": "Cradle Head Camera Control object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Camera Id",
+                    "example": 1
+                },
+                "command": {
+                    "type": "integer",
+                    "description": "Control Command  1=\"left\"/2=\"right\"/3=\"up\"/4=\"down\"",
+                    "example": 3
+                },
+                "flag": {
+                    "type": "boolean",
+                    "description": "Camera Control Flag, always True",
+                    "example": true
+                }
+            },
+            "required": [
+                "id",
+                "command",
+                "flag"
+            ]
+        },
+        "CameraMap": {
+            "description": "Camera object(map)   pledge:key=\"cameraid\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/Camera"
+                }
+            }
+        },
+        "PushInfoMap": {
+            "description": "PushInfo object(map) pledge:key=\"cameraid\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/PushInfo"
+                }
+            }
+        },
+        "PtzCtlMap": {
+            "description": "Cradle Head Camera Control object(map) pledge:key=\"cameraid\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/PtzCtl"
+                }
+            }
+        },
+        "wifi_config": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "description": "enable or disable wifi"
+                },
+                "ieee802.11": {
+                    "description": "ieee 802.11 Config",
+                    "type": "object",
+                    "properties": {
+                        "ssid": {
+                            "type": "string",
+                            "example": "VBGWifi"
+                        },
+                        "operation": {
+                            "description": "operation config",
+                            "type": "object",
+                            "properties": {
+                                "channel": {
+                                    "type": "integer",
+                                    "example": 7
+                                }
+                            }
+                        }
+                    }
+                },
+                "wpa": {
+                    "description": "wifi security config",
+                    "type": "object",
+                    "properties": {
+                        "passphrase": {
+                            "description": "password phrase",
+                            "type": "string",
+                            "example": "VBG12345"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

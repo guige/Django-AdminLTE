@@ -1,0 +1,3351 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a Vega OS Cloud Api Reference.\n* Content-Type is application/json\n* All timestamps are returned in ISO 8601 format: \n* All key/value are optional unless noted otherwise.\n",
+        "version": "1.0.1",
+        "title": "Vega OS Cloud API",
+        "termsOfService": "http://www.utstarcom.com/terms/",
+        "contact": {
+            "name": "song.chen@utstar.com"
+        }
+    },
+    "host": "m.vegcloud.xyz",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "securityDefinitions": {
+        "basicAuth": {
+            "type": "basic",
+            "description": "HTTP Basic Authentication. Works over `HTTP` and `HTTPS`"
+        }
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/UTCloudApi/V1": {
+            "get": {
+                "tags": [
+                    "common"
+                ],
+                "summary": "Ping the API server",
+                "description": "Ping the API server",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                }
+            }
+        },
+        "/UTCloudApi/apps/V1": {
+            "get": {
+                "tags": [
+                    "apps"
+                ],
+                "summary": "Get all application configuration and status",
+                "description": "Get all application configuration and status",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/app_info"
+                            }
+                        },
+                        "examples": {
+                            "ippbx": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "1.2",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "openvpn": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "1.3",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "email": {
+                                "subscription": true,
+                                "status": true,
+                                "version": "v1.9",
+                                "vendor": "",
+                                "expiration": "2017-05-15T00:00:00.000Z"
+                            },
+                            "firewall": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "webproxy": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "",
+                                "vendor": "",
+                                "expiration": ""
+                            },
+                            "storage": {
+                                "subscription": false,
+                                "status": false,
+                                "version": "",
+                                "vendor": "",
+                                "expiration": ""
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/apps/V1/{app_name}": {
+            "get": {
+                "tags": [
+                    "apps"
+                ],
+                "summary": "Get application configuration and status",
+                "description": "Get application configuration and status",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/app_name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/app_info"
+                        },
+                        "examples": {
+                            "subscription": false,
+                            "status": false,
+                            "version": "1.2",
+                            "vendor": "",
+                            "expiration": ""
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "apps"
+                ],
+                "summary": "Modify application configurations",
+                "description": "Modify application configurations",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/app_name"
+                    },
+                    {
+                        "in": "body",
+                        "name": "app_conf",
+                        "schema": {
+                            "$ref": "#/definitions/app_info"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/monitor/V1": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return All Monitor Info",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Modify Monitor Configurations",
+                "description": "patch Monitor config",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "patch_monitor_config",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "type": "boolean",
+                                    "description": "enable or disable monitor",
+                                    "example": true
+                                },
+                                "pushaddr": {
+                                    "type": "string",
+                                    "description": "modify monitor push stream address",
+                                    "example": "rtmp://172.21.148.249:1935/live4/room1"
+                                },
+                                "pulladdr": {
+                                    "type": "string",
+                                    "description": "modify monitor pull stream address",
+                                    "example": "rtmp://172.21.148.249:1935/live4/room1"
+                                },
+                                "camera": {
+                                    "$ref": "#/definitions/CameraMap"
+                                },
+                                "pushinfo": {
+                                    "$ref": "#/definitions/PushInfoMap"
+                                },
+                                "ptzcontrol": {
+                                    "$ref": "#/definitions/PtzCtlMap"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/monitor/V1/cameras": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return Camera Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/monitor/V1/pushinfo": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return Current  Monitor  Push Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/monitor/V1/ptzctl": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return Camera ExtCommand Control Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/monitor/V1/videos": {
+            "get": {
+                "tags": [
+                    "Ut Monitor"
+                ],
+                "summary": "Return the info of All/Single Recoreded  Video-Files",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "date",
+                        "in": "query",
+                        "description": "find video by date e.g:'20170216','20170216-20170221'",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cameraid",
+                        "in": "query",
+                        "description": "camera id",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/music/V1": {
+            "get": {
+                "tags": [
+                    "Ut Music"
+                ],
+                "summary": "Return All Music Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Ut Music"
+                ],
+                "summary": "Modify Music Configurations",
+                "description": "patch Music config",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "patch_music_config",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "volume": {
+                                    "type": "integer",
+                                    "description": "set system volume 1=\"Add 3% Volume\"/2=\"reduce 3% volume\"",
+                                    "example": 0
+                                },
+                                "playaction": {
+                                    "type": "integer",
+                                    "description": "set music action 1=\"Start\"/2=\"Pause\"/3=\"Stop\"",
+                                    "example": 0
+                                },
+                                "savesong": {
+                                    "$ref": "#/definitions/SaveSong"
+                                },
+                                "playctlinfo": {
+                                    "$ref": "#/definitions/PlayCtlInfo"
+                                },
+                                "playlistctl": {
+                                    "$ref": "#/definitions/PlayListCtlMap"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/music/V1/songinfo": {
+            "get": {
+                "tags": [
+                    "Ut Music"
+                ],
+                "summary": "Return Song and Playlist Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/SongListMap"
+                            }
+                        },
+                        "examples": {
+                            "music1": {
+                                "songname": "yesterday.mp3",
+                                "songtime": "04:25"
+                            },
+                            "music2": {
+                                "songname": "tomorrow.mp3",
+                                "songtime": "04:25"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/music/V1/playlistinfo": {
+            "get": {
+                "tags": [
+                    "Ut Music"
+                ],
+                "summary": "Return Song and Playlist Info",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "playlistname",
+                        "in": "query",
+                        "description": "playlist name",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/PlayListCtlMap"
+                            }
+                        },
+                        "examples": {
+                            "playlist1": {
+                                "playlistname": "music.lst",
+                                "songname": [
+                                    "yesterday.mp3",
+                                    "tomorrow.mp3"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/music/V1/playlistctl?playlistname={playlistname}&songname={songname}": {
+            "delete": {
+                "tags": [
+                    "Ut music"
+                ],
+                "summary": "Delete playlist Configurations",
+                "description": "delete playlist config",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "playlistname",
+                        "in": "path",
+                        "description": "playlist name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "songname",
+                        "in": "path",
+                        "description": "songname",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/music/V1/currentsong": {
+            "get": {
+                "tags": [
+                    "Ut Music"
+                ],
+                "summary": "Return the currently playing song",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "object",
+                            "items": {
+                                "$ref": "#/definitions/CurPlayInfo"
+                            }
+                        },
+                        "examples": {
+                            "songname": "yesterday.mp3"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/hostname": {
+            "get": {
+                "tags": [
+                    "hostname"
+                ],
+                "summary": "Return hostname information",
+                "description": "Return hostname information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "hostname"
+                ],
+                "summary": "Modify hostname information",
+                "description": "Modify hostname information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "hostname",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/system": {
+            "get": {
+                "tags": [
+                    "system"
+                ],
+                "summary": "Return system information",
+                "description": "Return system information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/system_config"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/system/stats/memory": {
+            "get": {
+                "tags": [
+                    "system"
+                ],
+                "summary": "Return system memory information",
+                "description": "Return system memory information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/system_memory_config"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/system/stats/cpuusage": {
+            "get": {
+                "tags": [
+                    "system"
+                ],
+                "summary": "Return system system cpu information",
+                "description": "Return system cpu information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/cpu_use_info"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/interface/Wireless": {
+            "get": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Return configurations for wireless",
+                "description": "Return configurations for wireless",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "enable": true,
+                            "egress_limit": 0,
+                            "ingress_limit": 0,
+                            "speed": "auto",
+                            "mtu": 1500,
+                            "vlan_mode": "access",
+                            "vlan_id": 1,
+                            "tunnel": 0,
+                            "trunks": [],
+                            "qinq": [],
+                            "WiFi": {
+                                "enable": true,
+                                "ieee802.11": {
+                                    "ssid": "VBGwifi",
+                                    "operation": {
+                                        "channel": 6
+                                    }
+                                },
+                                "wpa": {
+                                    "passphrase": "vbg12345"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Modify configurations for wireless",
+                "description": "Modify configurations for wireless",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "wifi_config",
+                        "description": "Wifi config",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/wifi_config"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/interface/Wireless/connected": {
+            "get": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Return connected wireless devices",
+                "description": "Return the connected wireless devices",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "examples": {
+                            "devices": [
+                                "00:01:02:03:04:05",
+                                "00:02:01:02:01:01"
+                            ]
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/vegaos/V1/interface/{ifname}/trafficstat": {
+            "get": {
+                "tags": [
+                    "interface"
+                ],
+                "summary": "Return interface traffic status for interface `ifname`",
+                "description": "Return interface status for interface `ifname`, NOTE: virtual interfaces may return `unknown`",
+                "parameters": [
+                    {
+                        "$ref": "#/parameters/ifname"
+                    },
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "sender": {
+                                    "type": "number",
+                                    "description": "sender rate",
+                                    "example": 12345
+                                },
+                                "receriver": {
+                                    "type": "number",
+                                    "description": "receriver rate",
+                                    "example": 12345
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/ftp/V1/downloads": {
+            "post": {
+                "tags": [
+                    "ftp"
+                ],
+                "summary": "Start a new task to download a file into FTP directory",
+                "description": "Start a new task to download a file into FTP directory",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "ftp_info",
+                        "schema": {
+                            "$ref": "#/definitions/ftp_info"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Success, file transfer accepted",
+                        "headers": {
+                            "Location": {
+                                "description": "The number of downloading task",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request, ex: file already exist"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/deviceManage/DeviceInfo/": {
+            "get": {
+                "tags": [
+                    "deviceManage"
+                ],
+                "summary": "Return the currently deviceinfo",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "sn",
+                        "in": "query",
+                        "description": "sn",
+                        "type": "string"
+                    },
+                    {
+                        "name": "ip",
+                        "in": "query",
+                        "description": "ip",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/device_info"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/deviceManage/DeviceInfo/{id}/": {
+            "get": {
+                "tags": [
+                    "deviceManage"
+                ],
+                "summary": "Return the currently deviceinfo",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "device id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "$ref": "#/definitions/device_info"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/deviceManage/PhyStatList/": {
+            "get": {
+                "tags": [
+                    "deviceManage"
+                ],
+                "summary": "Return the currently deviceinfo",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/phystatlist_info"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/deviceManage/PhyStatList/{id}": {
+            "get": {
+                "tags": [
+                    "deviceManage"
+                ],
+                "summary": "Return the currently deviceinfo",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "$ref": "#/definitions/phystatlist_info"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/deviceManage/PhyStatus/": {
+            "get": {
+                "tags": [
+                    "deviceManage"
+                ],
+                "summary": "Return the currently deviceinfo",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/phystatus_info"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/deviceManage/PhyStatus/{id}": {
+            "get": {
+                "tags": [
+                    "deviceManage"
+                ],
+                "summary": "Return the currently deviceinfo",
+                "description": "",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "id",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "$ref": "#/definitions/phystatus_info"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/_ping": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Ping the docker server",
+                "description": "Ping the docker server",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/commit": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Create a new image from a container’s changes",
+                "description": "Create a new image from a container’s changes",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Inspect a container",
+                "description": "Inspect a container",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/archive": {
+            "put": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Upload a tar archive to be extracted to a path in the filesystem of container `id`",
+                "description": "Upload a tar archive to be extracted to a path in the filesystem of container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/attach": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Attach to a container",
+                "description": "Attach to a container",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/attach/ws": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Attach to a container (websocket)",
+                "description": "Attach to a container (websocket)",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/changes": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Retrieving information about files and folders in a container",
+                "description": "Retrieving information about files and folders in a container",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/export": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Export the contents of container `id`",
+                "description": "Export the contents of container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/kill": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Kill the container `id`",
+                "description": "Kill the container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/logs": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Get `stdout` and `stderr` logs from the container `id`",
+                "description": "Get `stdout` and `stderr` logs from the container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/restart": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Restart the container `id`",
+                "description": "Restart the container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/start": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Start the container `id`",
+                "description": "Start the container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/stats": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Get container stats based on resource usage",
+                "description": "Get container stats based on resource usage",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/stop": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Stop the container `id`",
+                "description": "Stop the container `id`",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/top": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "List processes running inside the container `id`.",
+                "description": "List processes running inside the container `id`.",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/update": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Update a container",
+                "description": "Update a container",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/container/{id}/wait": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Block until container `id` stops, then returns the exit code",
+                "description": "Block until container `id` stops, then returns the exit code",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/containers": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "List containers",
+                "description": "List containers",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Create a container",
+                "description": "Create a container",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/events": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Monitor Docker’s events",
+                "description": "Monitor Docker’s events",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/image": {
+            "delete": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Remove an image from the filesystem",
+                "description": "Remove an image from the filesystem",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/image/json": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Inspect an image",
+                "description": "Inspect an image",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/image/get": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Get a tarball containing all images in a repository",
+                "description": "Get a tarball containing all images in a repository",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/image/history": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Get the history of an image",
+                "description": "Get the history of an image",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/image/tag": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Tag an image into a repository",
+                "description": "Tag an image into a repository",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/images": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "List Images",
+                "description": "List Images",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Create an image either by pulling it from the registry or by importing it",
+                "description": "Create an image either by pulling it from the registry or by importing it",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/images/get": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Get a tarball containing all images and metadata for one or more repositories.",
+                "description": "Get a tarball containing all images and metadata for one or more repositories.",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/images/load": {
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Return docker information",
+                "description": "Return docker information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/info": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Return docker information",
+                "description": "Return docker information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "examples": {
+                            "ID": "X4I2:LNHV:Q52A:SVJN:GWMM:5ARJ:AYJ2:KXL7:FK4A:YAKJ:4JMH:TCXW",
+                            "Containers": 0,
+                            "ContainersRunning": 0,
+                            "ContainersPaused": 0,
+                            "ContainersStopped": 0,
+                            "Images": 0,
+                            "Driver": "devicemapper",
+                            "DriverStatus": [
+                                [
+                                    "Pool Name",
+                                    "docker-8:17-259590-pool"
+                                ],
+                                [
+                                    "Pool Blocksize",
+                                    "65.54 kB"
+                                ],
+                                [
+                                    "Base Device Size",
+                                    "10.74 GB"
+                                ],
+                                [
+                                    "Backing Filesystem",
+                                    "ext4"
+                                ],
+                                [
+                                    "Data file",
+                                    "/dev/loop0"
+                                ],
+                                [
+                                    "Metadata file",
+                                    "/dev/loop1"
+                                ],
+                                [
+                                    "Data Space Used",
+                                    "305.7 MB"
+                                ],
+                                [
+                                    "Data Space Total",
+                                    "107.4 GB"
+                                ],
+                                [
+                                    "Data Space Available",
+                                    "6.648 GB"
+                                ],
+                                [
+                                    "Metadata Space Used",
+                                    "733.2 kB"
+                                ],
+                                [
+                                    "Metadata Space Total",
+                                    "2.147 GB"
+                                ],
+                                [
+                                    "Metadata Space Available",
+                                    "2.147 GB"
+                                ],
+                                [
+                                    "Udev Sync Supported",
+                                    "true"
+                                ],
+                                [
+                                    "Deferred Removal Enabled",
+                                    "true"
+                                ],
+                                [
+                                    "Deferred Deletion Enabled",
+                                    "true"
+                                ],
+                                [
+                                    "Deferred Deleted Device Count",
+                                    "0"
+                                ],
+                                [
+                                    "Data loop file",
+                                    "/vbg/docker/devicemapper/devicemapper/data"
+                                ],
+                                [
+                                    "Metadata loop file",
+                                    "/vbg/docker/devicemapper/devicemapper/metadata"
+                                ],
+                                [
+                                    "Library Version",
+                                    "1.02.122 (2016-04-09)"
+                                ]
+                            ],
+                            "SystemStatus": null,
+                            "Plugins": {
+                                "Volume": [
+                                    "local"
+                                ],
+                                "Network": [
+                                    "bridge",
+                                    "null",
+                                    "host"
+                                ],
+                                "Authorization": null
+                            },
+                            "MemoryLimit": true,
+                            "SwapLimit": false,
+                            "CpuCfsPeriod": true,
+                            "CpuCfsQuota": true,
+                            "CPUShares": true,
+                            "CPUSet": true,
+                            "IPv4Forwarding": true,
+                            "BridgeNfIptables": true,
+                            "BridgeNfIp6tables": true,
+                            "Debug": false,
+                            "NFd": 13,
+                            "OomKillDisable": true,
+                            "NGoroutines": 18,
+                            "SystemTime": "2016-06-01T21:00:58.560235916Z",
+                            "ExecutionDriver": "native-0.2",
+                            "LoggingDriver": "json-file",
+                            "NEventsListener": 0,
+                            "KernelVersion": "3.14.41-1-lts",
+                            "OperatingSystem": "VEGA OS",
+                            "OSType": "linux",
+                            "Architecture": "x86_64",
+                            "IndexServerAddress": "https://index.docker.io/v1/",
+                            "RegistryConfig": {
+                                "InsecureRegistryCIDRs": [
+                                    "127.0.0.0/8"
+                                ],
+                                "IndexConfigs": {
+                                    "docker.io": {
+                                        "Name": "docker.io",
+                                        "Mirrors": null,
+                                        "Secure": true,
+                                        "Official": true
+                                    }
+                                },
+                                "Mirrors": null
+                            },
+                            "InitSha1": "f534c088d2852f589cd078c60a2f2fa3a31aed4e",
+                            "InitPath": "/usr/lib/docker/dockerinit",
+                            "NCPU": 4,
+                            "MemTotal": 4130422784,
+                            "DockerRootDir": "/vbg/docker",
+                            "HttpProxy": "",
+                            "HttpsProxy": "",
+                            "NoProxy": "",
+                            "Name": "vbg-m8105",
+                            "Labels": null,
+                            "ExperimentalBuild": false,
+                            "ServerVersion": "1.10.3",
+                            "ClusterStore": "",
+                            "ClusterAdvertise": ""
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/version": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Show the docker version information",
+                "description": "Show the docker version information",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/volume/{name}": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Inspect a volume",
+                "description": "Inspect a volume",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/name"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/docker/V1/volumes": {
+            "get": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "List volumes",
+                "description": "List volumes",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "docker"
+                ],
+                "summary": "Create a volume",
+                "description": "Create a volume",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/iot/V1": {
+            "get": {
+                "tags": [
+                    "iot"
+                ],
+                "summary": "Return IOT service configuration",
+                "description": "Return IOT service configuration",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "$ref": "#/definitions/iot_enable"
+                        },
+                        "examples": {
+                            "enable": true
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/iot/V1/enable": {
+            "get": {
+                "tags": [
+                    "iot"
+                ],
+                "summary": "Return IOT enable configuration",
+                "description": "Return IOT enable configuration",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success, response body is not empty",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "iot"
+                ],
+                "summary": "Set IOT enable configuration",
+                "description": "Set IOT enable configuration",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "in": "body",
+                        "name": "iot_enable",
+                        "required": true,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/iot/V1/eps": {
+            "get": {
+                "tags": [
+                    "iot"
+                ],
+                "summary": "Return all devices and their status",
+                "description": "Return all devices and their status",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "msg": []
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        },
+        "/UTCloudApi/V1/iot/ep/{epid}": {
+            "get": {
+                "tags": [
+                    "iot"
+                ],
+                "summary": "Return status of the specified device",
+                "description": "Return status of the specified device",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/epid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "devtype": "SL_OL_3C",
+                            "agt": "A3MAAABbACsFRzU0NjI2NA",
+                            "me": "2716",
+                            "name": "智慧插座",
+                            "stat": 1,
+                            "data": {
+                                "$ref": "#/definitions/iot_data"
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "iot"
+                ],
+                "summary": "Modify attributes for specified device",
+                "description": "Modify attributes for specified device",
+                "parameters": [
+                    {
+                        "name": "devid",
+                        "in": "query",
+                        "description": "device id",
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "$ref": "#/parameters/epid"
+                    },
+                    {
+                        "in": "body",
+                        "name": "iot_attribute",
+                        "description": "Attributes of iot device",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/iot_attribute"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Success, response body is empty"
+                    }
+                },
+                "security": [
+                    {
+                        "basicAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "parameters": {
+        "app_name": {
+            "name": "app_name",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "enum": [
+                "ippbx",
+                "openvpn",
+                "firewall",
+                "email",
+                "webproxy",
+                "storage"
+            ]
+        },
+        "name": {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+        },
+        "id": {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+        },
+        "ifname": {
+            "name": "ifname",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "enum": [
+                "GigabitEth1",
+                "GigabitEth2",
+                "GigabitEth3",
+                "GigabitEth4",
+                "Sfp1",
+                "Wireless",
+                "Guest1",
+                "Guest2",
+                "Guest3",
+                "Guest4",
+                "Guest5",
+                "Guest6",
+                "Guest7",
+                "Guest8",
+                "Management1",
+                "Management2"
+            ]
+        },
+        "epid": {
+            "name": "epid",
+            "in": "path",
+            "description": "iot device id ('me' value)",
+            "required": true,
+            "type": "string"
+        }
+    },
+    "definitions": {
+        "app_info": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "description": "Application enable or not",
+                    "example": true
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Application name",
+                    "example": "email"
+                },
+                "preinstall": {
+                    "type": "boolean",
+                    "description": "Application preinstall or not",
+                    "example": true
+                },
+                "status": {
+                    "type": "boolean",
+                    "description": "Application status",
+                    "example": true
+                },
+                "subscription": {
+                    "type": "boolean",
+                    "description": "Application subscriped or not",
+                    "example": true
+                },
+                "version": {
+                    "type": "string",
+                    "description": "Application version",
+                    "example": "v1.0"
+                },
+                "vendor": {
+                    "type": "string",
+                    "description": "Application vendor",
+                    "example": "UTstarcom"
+                },
+                "expiration": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "Application expiration date",
+                    "example": "2017-05-15T00:00:00.000Z"
+                }
+            }
+        },
+        "system_config": {
+            "type": "object",
+            "properties": {
+                "serial_number": {
+                    "description": "serial_number",
+                    "type": "string",
+                    "example": "SN1536012178"
+                },
+                "sku_number": {
+                    "description": "sku_number",
+                    "type": "string",
+                    "example": "QXX1895906"
+                },
+                "software_version": {
+                    "description": "software_version",
+                    "type": "string",
+                    "example": "2.1.2"
+                },
+                "hardware_version": {
+                    "description": "hardware_version",
+                    "type": "string",
+                    "example": "A1"
+                },
+                "family": {
+                    "description": "family",
+                    "type": "string",
+                    "example": "VBG"
+                },
+                "manufacturer": {
+                    "description": "manufacturer",
+                    "type": "string",
+                    "example": "VGL"
+                },
+                "product": {
+                    "description": "product",
+                    "type": "string",
+                    "example": "M8105"
+                },
+                "mac": {
+                    "description": "mac",
+                    "type": "string",
+                    "example": "00:07:ba:30:a7:40"
+                },
+                "meminfo": {
+                    "description": "meminfo",
+                    "type": "string",
+                    "example": "16G"
+                },
+                "cpuinfo": {
+                    "description": "cpuinfo",
+                    "type": "object",
+                    "items": {
+                        "$ref": "#/definitions/cpu_info"
+                    }
+                }
+            }
+        },
+        "system_memory_config": {
+            "type": "object",
+            "properties": {
+                "MemTotal": {
+                    "description": "System total memory, unit is 'M'.",
+                    "type": "integer",
+                    "example": "16327976"
+                },
+                "MemFree": {
+                    "description": "System free memory",
+                    "type": "integer",
+                    "example": "13818004"
+                },
+                "MemAvailable": {
+                    "description": "System available memory",
+                    "type": "integer",
+                    "example": "15653796"
+                }
+            }
+        },
+        "Camera": {
+            "description": "Camera object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Camera Id",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Camera Name",
+                    "example": "camera1"
+                }
+            },
+            "required": [
+                "id",
+                "name"
+            ]
+        },
+        "PushInfo": {
+            "description": "PushInfo object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Camera Id",
+                    "example": "1"
+                },
+                "hisvideofile": {
+                    "type": "string",
+                    "description": "history video filename, keep \"\" when pushing live camera",
+                    "example": "Cam001_20170214_1031"
+                },
+                "hisstarttime": {
+                    "type": "string",
+                    "description": "starttime of history video when pushing, keep \"\" when pushing live camera",
+                    "example": "00:02:50"
+                },
+                "resolution": {
+                    "type": "string",
+                    "description": "Resolution config when pushing",
+                    "example": "1280*720"
+                },
+                "enable": {
+                    "type": "boolean",
+                    "description": "enable/disable pushing  live/history video",
+                    "example": true
+                }
+            },
+            "required": [
+                "id",
+                "resolution",
+                "enable"
+            ]
+        },
+        "PtzCtl": {
+            "description": "Cradle Head Camera Control object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Camera Id",
+                    "example": 1
+                },
+                "command": {
+                    "type": "integer",
+                    "description": "Control Command  1=\"left\"/2=\"right\"/3=\"up\"/4=\"down\"",
+                    "example": 3
+                },
+                "flag": {
+                    "type": "boolean",
+                    "description": "Camera Control Flag, always True",
+                    "example": true
+                }
+            },
+            "required": [
+                "id",
+                "command",
+                "flag"
+            ]
+        },
+        "CameraMap": {
+            "description": "Camera object(map)   pledge:key=\"cameraid\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/Camera"
+                }
+            }
+        },
+        "PushInfoMap": {
+            "description": "PushInfo object(map) pledge:key=\"cameraid\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/PushInfo"
+                }
+            }
+        },
+        "PtzCtlMap": {
+            "description": "Cradle Head Camera Control object(map) pledge:key=\"cameraid\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/PtzCtl"
+                }
+            }
+        },
+        "wifi_config": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "description": "enable or disable wifi"
+                },
+                "ieee802.11": {
+                    "description": "ieee 802.11 Config",
+                    "type": "object",
+                    "properties": {
+                        "ssid": {
+                            "type": "string",
+                            "example": "VBGWifi"
+                        },
+                        "operation": {
+                            "description": "operation config",
+                            "type": "object",
+                            "properties": {
+                                "channel": {
+                                    "type": "integer",
+                                    "example": 7
+                                }
+                            }
+                        }
+                    }
+                },
+                "wpa": {
+                    "description": "wifi security config",
+                    "type": "object",
+                    "properties": {
+                        "passphrase": {
+                            "description": "password phrase",
+                            "type": "string",
+                            "example": "VBG12345"
+                        }
+                    }
+                }
+            }
+        },
+        "cpu_use_info": {
+            "type": "object",
+            "properties": {
+                "usage_user": {
+                    "description": "cpu user number",
+                    "type": "integer",
+                    "example": 1
+                },
+                "usage_system": {
+                    "description": "cpu system use",
+                    "type": "number",
+                    "example": 32
+                },
+                "usage_total": {
+                    "description": "cpu total use",
+                    "type": "number",
+                    "example": 32
+                }
+            }
+        },
+        "cpu_info": {
+            "type": "object",
+            "properties": {
+                "cpumodelname": {
+                    "description": "cpu model name",
+                    "type": "string",
+                    "example": "Intel(R) Core(TM) i7-2600 CPU @ 3.40GHz"
+                },
+                "cpumhz": {
+                    "description": "CPU HMz",
+                    "type": "string",
+                    "example": "3.2MHz"
+                }
+            }
+        },
+        "SaveSong": {
+            "description": "save song object",
+            "properties": {
+                "savesong": {
+                    "type": "integer",
+                    "description": "save action 1 => save,2 => remove",
+                    "example": "1"
+                },
+                "song": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "song name",
+                    "example": {
+                        "song": [
+                            "one_step.mp3",
+                            "two_step.mp3"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "savesong",
+                "song"
+            ]
+        },
+        "CurPlayInfo": {
+            "description": "Playctl object",
+            "properties": {
+                "playlist": {
+                    "type": "string",
+                    "description": "playlist name",
+                    "example": "playlist"
+                },
+                "playsong": {
+                    "type": "string",
+                    "description": "song name",
+                    "example": "one_step.mp3"
+                }
+            },
+            "required": [
+                "playlist"
+            ]
+        },
+        "PlayCtlInfo": {
+            "description": "Playctl object",
+            "properties": {
+                "playlist": {
+                    "type": "string",
+                    "description": "playlist name",
+                    "example": "playlist"
+                },
+                "playsong": {
+                    "type": "string",
+                    "description": "song name",
+                    "example": "one_step.mp3"
+                },
+                "playflag": {
+                    "type": "boolean",
+                    "description": "judge play action always true",
+                    "example": "true"
+                }
+            },
+            "required": [
+                "playlist",
+                "playflag"
+            ]
+        },
+        "PlayListCtl": {
+            "description": "PlayList object",
+            "properties": {
+                "playlistname": {
+                    "type": "string",
+                    "description": "playlist name",
+                    "example": "playlist"
+                },
+                "songname": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "song name",
+                    "example": "one_step.mp3"
+                }
+            },
+            "required": [
+                "playlistname",
+                "songname"
+            ]
+        },
+        "SongListInfo": {
+            "description": "SongList object",
+            "properties": {
+                "songname": {
+                    "type": "string",
+                    "description": "song name",
+                    "example": "yesterday.mp3"
+                },
+                "songtime": {
+                    "type": "string",
+                    "description": "song time",
+                    "example": "04:25"
+                }
+            }
+        },
+        "PlayListCtlMap": {
+            "description": "Cradle Head Camera Control object(map) pledge:key=\"playlistname\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/PlayListCtl"
+                }
+            }
+        },
+        "SongListMap": {
+            "description": "Cradle Head Show SongInfo object(map) pledge:key=\"songname\"",
+            "required": [
+                "key"
+            ],
+            "properties": {
+                "key": {
+                    "$ref": "#/definitions/SongListInfo"
+                }
+            }
+        },
+        "ftp_info": {
+            "type": "object",
+            "required": [
+                "location",
+                "filename"
+            ],
+            "properties": {
+                "location": {
+                    "description": "FTP host and file path",
+                    "type": "string",
+                    "example": "127.0.0.1/file.txt"
+                },
+                "filename": {
+                    "description": "Filename to save the downloaded file as",
+                    "type": "string",
+                    "example": "file.txt"
+                },
+                "protocol": {
+                    "description": "Transfer protocol",
+                    "type": "string",
+                    "enum": [
+                        "http",
+                        "ftp"
+                    ]
+                },
+                "username": {
+                    "description": "Username for authentication",
+                    "type": "string",
+                    "example": "admin"
+                },
+                "password": {
+                    "description": "Password for authentication",
+                    "type": "string",
+                    "example": "admin"
+                }
+            }
+        },
+        "device_info": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "device id",
+                    "type": "integer",
+                    "example": 20
+                },
+                "sn": {
+                    "description": "device sn",
+                    "type": "string",
+                    "example": "01234567890123456789AB"
+                },
+                "key": {
+                    "description": "device sn",
+                    "type": "string",
+                    "example": "qwertasdfg"
+                },
+                "ip": {
+                    "description": "device sn",
+                    "type": "string",
+                    "example": "10.4.32.183"
+                },
+                "port": {
+                    "description": "device sn",
+                    "type": "integer",
+                    "example": 8080
+                },
+                "starttime": {
+                    "description": "device sn",
+                    "type": "string",
+                    "example": "2017-02-28T13:52:22.301875Z"
+                }
+            }
+        },
+        "phystatlist_info": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "physical status id",
+                    "type": "integer",
+                    "example": 2
+                },
+                "DispChn": {
+                    "description": "chinese description",
+                    "type": "string",
+                    "example": "正常"
+                },
+                "MemoChn": {
+                    "description": "chinese memo",
+                    "type": "string",
+                    "example": "物理对象正常工作"
+                },
+                "DispEng": {
+                    "description": "english description",
+                    "type": "string",
+                    "example": "normal"
+                },
+                "MemoEng": {
+                    "description": "english memo",
+                    "type": "string",
+                    "example": "Normal"
+                }
+            }
+        },
+        "phystatus_info": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "description": "physical status id",
+                    "type": "integer",
+                    "example": 2
+                },
+                "dev": {
+                    "description": "device id",
+                    "type": "integer",
+                    "example": 2
+                },
+                "status": {
+                    "description": "device physical status",
+                    "type": "integer",
+                    "example": 1
+                },
+                "onlinetime": {
+                    "description": "device online time",
+                    "type": "string",
+                    "example": "2017-02-27T22:04:31.084284Z"
+                }
+            }
+        },
+        "iot_enable": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "description": "iot service enable or not",
+                    "type": "boolean"
+                }
+            }
+        },
+        "iot_data": {
+            "type": "object",
+            "description": "please refer to document for detailed description"
+        },
+        "iot_attribute": {
+            "type": "object",
+            "description": "please refer to document for detailed description",
+            "properties": {
+                "idx": {
+                    "description": "Attribute class.",
+                    "type": "string"
+                },
+                "tag": {
+                    "description": "Always be 'm' now.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Type of the 'val'",
+                    "type": "integer"
+                },
+                "val": {
+                    "description": "Attribute value",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

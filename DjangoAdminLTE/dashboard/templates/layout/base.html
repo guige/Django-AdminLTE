@@ -1,0 +1,75 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh_Hans">
+
+<head>
+    {% load i18n %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>VEG: AdminLTE</title>
+
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="{% static 'AdminLTE/bootstrap/css/bootstrap.min.css' %}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{%static 'font-awesome-4.7.0/css/font-awesome.min.css'%}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{%static 'ionicons-2.0.1/css/ionicons.min.css'%}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'AdminLTE/plugins/datatables/dataTables.bootstrap.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'AdminLTE/dist/css/AdminLTE.min.css' %}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="{% static 'AdminLTE/dist/css/skins/_all-skins.min.css' %}">
+
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'AdminLTE/plugins/iCheck/flat/blue.css' %}">
+  
+  <link rel="Shortcut Icon" href="{% static 'ionicons-2.0.1/png/512/xbox.png' %}" type="image/x-icon">
+  <!-- page head -->
+  {% block extrahead %}
+  {% endblock extrahead %}
+</head>
+
+  <!-- page style -->
+{% block extrastyle %}
+{% endblock extrastyle %}
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <!-- page content
+  use template in page:
+    {% block context %}
+    {% endblock context %}
+  -->
+
+<!-- jQuery 2.2.3 -->
+<script src="{% static 'AdminLTE/plugins/jQuery/jquery-2.2.3.min.js' %}"></script>
+{% block basecontent %}
+{% endblock basecontent %}
+<!-- Bootstrap 3.3.6 -->
+<script src="{% static 'AdminLTE/bootstrap/js/bootstrap.min.js' %}"></script>
+<!-- DataTables -->
+<script src="{% static 'AdminLTE/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'AdminLTE/plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+<!-- SlimScroll -->
+<script src="{% static 'AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js' %}"></script>
+<!-- FastClick -->
+<script src="{% static 'AdminLTE/plugins/fastclick/fastclick.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'AdminLTE/dist/js/app.min.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'AdminLTE/dist/js/demo.js' %}"></script>
+<!-- ut common script -->
+<script src="{% static 'js/js.cookie.js' %}"></script>
+<script src"{% static 'dist/js/ut-comm.js' %}"> </script>
+<!-- page script -->
+{% block extrajs %}
+{% endblock extrajs %}
+</body>
+</html>
